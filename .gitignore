@@ -1,0 +1,19 @@
+# OpenCode session artifacts (local only)
+.omo/
+.opencode
+
+# macOS
+.DS_Store
+
+# Build artifacts
+landing/extension/*.zip
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (kalau nanti butuh untuk build tools)
+node_modules/
+package-lock.json
