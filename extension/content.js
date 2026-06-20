@@ -25,20 +25,22 @@
  * Applied synchronously before the async storage read below,
  * so users on the default theme never see unstyled Twitter.
  *
- * v1.3.0 — fixes from live DOM inspection of twitter.com:
- * class-based colors (.r-bcqeeo, .r-qvutc0), new gray rgb(83,100,113),
- * post/follow buttons, progress bar, carousel, tab bg, borders.
+ * v1.4.0 — fixes from full element dump: global a { color } override,
+ * verified icon, tweetTextarea, app-text-transition-container,
+ * show more link, timestamp, nav rail, caret button.
  * ---------------------------------------------------------- */
 const DEFAULT_THEME_CSS = `/* theme-name: Neo-Brutalism */
 /* theme-author: Ryan Prayoga */
 /* theme-description: Loud. Raw. Unapologetic. Hard shadows, thick black borders, saturated color blocks. */
-/* theme-version: 1.3.0 */
+/* theme-version: 1.4.0 */
 /* theme-recommended-twitter-theme: Default (Light) */
 
 /* ============================================================
-   XStyler — Neo-Brutalism default theme (v1.3.0)
+   XStyler — Neo-Brutalism default theme (v1.4.0)
    Comprehensive Twitter/X override.
    Revised after live DOM inspection of twitter.com/x.com.
+   v1.4.0: fixes from full element dump — <a> default blue, verified
+   icon, tweetTextarea, app-text-transition-container, show more link.
 
    STRATEGY:
    1. Kill inline body bg + hijack Twitter CSS vars
@@ -965,6 +967,182 @@ video {
 [data-testid="BottomBar"] {
   background-color: #FFFDF5 !important;
   border-top: 4px solid #000 !important;
+}
+
+/* ============================================================
+   15. v1.4.0 FIXES — from full element dump of twitter.com
+   Found: <a> tags use browser default blue rgb(0,0,238) because
+   Twitter doesn't set color on all links. Our .r-bcqeeo override
+   only works when class is present. Need global a { color } rule.
+   ============================================================ */
+
+a:link,
+a:visited {
+  color: #FF4757 !important;
+  text-decoration: none !important;
+  font-weight: 700 !important;
+}
+
+a:hover {
+  color: #000 !important;
+  text-decoration: underline !important;
+}
+
+a:active {
+  color: #FECA57 !important;
+}
+
+/* Display name links — keep bold black, hover red */
+[data-testid="User-Name"] a:link,
+[data-testid="User-Name"] a:visited,
+[data-testid="UserName"] a:link,
+[data-testid="UserName"] a:visited {
+  color: #000 !important;
+  font-weight: 800 !important;
+  text-decoration: none !important;
+}
+
+[data-testid="User-Name"] a:hover,
+[data-testid="UserName"] a:hover {
+  color: #FF4757 !important;
+  text-decoration: underline !important;
+}
+
+/* Verified icon — Twitter blue rgb(29, 155, 240) on svg element */
+svg[data-testid="icon-verified"],
+svg[data-testid="verificationBadge"] {
+  color: #FF4757 !important;
+  border-color: #FF4757 !important;
+}
+
+svg[data-testid="icon-verified"] path,
+svg[data-testid="verificationBadge"] path {
+  fill: #FF4757 !important;
+  stroke: #FF4757 !important;
+}
+
+/* "Show more" link on long tweets */
+[data-testid="tweet-text-show-more-link"],
+[data-testid="tweet-text-show-more-link"] span {
+  color: #FF4757 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+}
+
+/* "Everyone can reply" text */
+[data-testid="tweetTextarea_0RichTextInputContainer"] {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+/* Compose textarea "What's happening?" placeholder */
+[data-testid="tweetTextarea_0"] {
+  color: #000 !important;
+  border-color: #000 !important;
+}
+
+/* Engagement count transition containers */
+[data-testid="app-text-transition-container"] {
+  color: #000 !important;
+  border-color: #000 !important;
+  font-weight: 800 !important;
+}
+
+/* Engagement count numbers (58, 283, 2.1K, etc) */
+[data-testid="app-text-transition-container"] + span,
+[data-testid="app-text-transition-container"] span {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Views count link */
+a[aria-label*="views"],
+a[aria-label*="View post"] {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+a[aria-label*="views"]:hover,
+a[aria-label*="View post"]:hover {
+  color: #FF4757 !important;
+}
+
+/* "Ad" label */
+[data-testid="placementTracking"] ~ * span {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Timestamp */
+time,
+a time,
+a[aria-label*="ago"] {
+  color: #000 !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+}
+
+/* "Following" tab (inactive) */
+[role="tab"]:not([aria-selected="true"]) span {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Quote tweet border */
+[role="link"] .r-adacv,
+.r-adacv {
+  border-color: #000 !important;
+}
+
+/* Skip-to buttons (accessibility, hidden by default) */
+[aria-label*="Skip to"] {
+  border-color: #000 !important;
+  background-color: #FECA57 !important;
+  color: #000 !important;
+}
+
+/* "See new posts" pill label text */
+[data-testid="pillLabel"] {
+  color: #FFF !important;
+  font-weight: 800 !important;
+}
+
+/* X logo link */
+a[aria-label="X"] {
+  color: #000 !important;
+}
+
+/* Nav rail links — brutalist uppercase */
+[aria-label="Primary"] a:link,
+[aria-label="Primary"] a:visited,
+[aria-label="Primary"] button {
+  color: #000 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+}
+
+[aria-label="Primary"] a:hover,
+[aria-label="Primary"] button:hover {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+}
+
+/* Account switcher button */
+[data-testid="SideNav_AccountSwitcher_Button"] {
+  border: 2px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+}
+
+/* Caret / more button on tweets */
+[data-testid="caret"] {
+  border: 2px solid transparent !important;
+}
+
+[data-testid="caret"]:hover {
+  border: 2px solid #000 !important;
+  box-shadow: 2px 2px 0 0 #000 !important;
+  background-color: #FECA57 !important;
 }
 
 `;
