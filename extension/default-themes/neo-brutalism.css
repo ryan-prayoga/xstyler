@@ -1,0 +1,724 @@
+/* theme-name: Neo-Brutalism */
+/* theme-author: Ryan Prayoga */
+/* theme-description: Loud. Raw. Unapologetic. Hard shadows, thick black borders, saturated color blocks. */
+/* theme-version: 1.2.0 */
+/* theme-recommended-twitter-theme: Default (Light) */
+
+/* ============================================================
+   XStyler — Neo-Brutalism default theme (v1.2.0)
+   Comprehensive Twitter/X override.
+
+   STRATEGY:
+   1. Kill inline body bg + hijack Twitter CSS vars
+   2. Override color-scheme on :root
+   3. Target .r-* atomic classes that carry background
+   4. data-testid for structural elements
+   5. SVG fill/stroke for icons
+   6. Tweet metadata (name, handle, timestamp, counts)
+   7. Sidebar widgets (trending, who-to-follow)
+   8. Cards, quote tweets, media containers
+   9. Dropdowns, modals, composer toolbar
+   10. Polls, notifications, profile tabs, danger buttons
+   ============================================================ */
+
+/* ============================================================
+   1. ROOT + BASE
+   ============================================================ */
+:root {
+  color-scheme: light !important;
+}
+
+html,
+body {
+  background-color: #FFFDF5 !important;
+  color: #000 !important;
+  font-family: "Courier New", ui-monospace, monospace !important;
+}
+
+#react-root,
+#react-root > div {
+  background-color: #FFFDF5 !important;
+  color: #000 !important;
+}
+
+/* Twitter theme class overrides — hijack their CSS vars */
+body.LightsOut,
+body.Dim,
+body.Default {
+  background-color: #FFFDF5 !important;
+  color: #000 !important;
+  --border-color: #000 !important;
+  --color: #000 !important;
+  --color-emphasis: #000 !important;
+  --hover-bg-color: #FECA57 !important;
+  --background-color: #FFFDF5 !important;
+  --primary-color: #FF4757 !important;
+  --accent-color: #FF4757 !important;
+}
+
+/* ============================================================
+   2. INLINE STYLE OVERRIDES
+   ============================================================ */
+[style*="background-color: rgb(0, 0, 0)"],
+[style*="background-color: rgb(5, 5, 5)"],
+[style*="background-color: rgb(21, 32, 43)"] {
+  background-color: #FFFDF5 !important;
+}
+
+[style*="background-color: rgb(255, 255, 255)"] {
+  background-color: #FFFDF5 !important;
+}
+
+[style*="background-color: rgb(29, 155, 240)"] {
+  background-color: #FF4757 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+}
+
+[style^="color: rgb(29, 155, 240)"] {
+  color: #FF4757 !important;
+  font-weight: 700 !important;
+}
+
+[style^="color: rgb(113, 118, 123)"] {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+[style^="color: rgb(239, 243, 24)"] {
+  color: #000 !important;
+}
+
+[style^="color: rgb(249, 24, 128)"] {
+  color: #FF4757 !important;
+}
+
+[style^="color: rgb(0, 186, 124)"] {
+  color: #2ECC71 !important;
+}
+
+[style^="color: rgb(244, 33, 46)"] {
+  color: #FF4757 !important;
+}
+
+[style^="background-color: rgb(107, 201, 251)"] {
+  background-color: #FECA57 !important;
+}
+
+[style*="scrollbar-color: rgb(62, 65, 68) rgb(22, 24, 28)"] {
+  scrollbar-color: #000 transparent !important;
+  scrollbar-width: thin !important;
+}
+
+/* ============================================================
+   3. ATOMIC CLASS OVERRIDES (.r-*)
+   ============================================================ */
+.r-yfoy6g { background-color: #FFFDF5 !important; }
+.r-g6ijar { background-color: #FFFDF5 !important; }
+.r-ii8lfi { background-color: #FFFDF5 !important; }
+
+.r-8erxvq {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+}
+
+.r-xnswec {
+  background-color: #FFFDF5 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 6px 6px 0 0 #000 !important;
+}
+
+.r-5zmot {
+  background-color: rgba(255, 253, 245, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 4px solid #000 !important;
+}
+
+.r-1ldzwu0 * { stroke: #FF4757 !important; }
+.r-19wmn03 { color: #FF4757 !important; }
+
+/* Polls */
+.r-1fneopy { border-color: #000 !important; }
+.r-1fneopy > * { color: #000 !important; }
+.r-eok2q2 { background-color: rgba(255, 71, 87, 0.8) !important; }
+.r-1peqgm7 { background-color: rgba(254, 202, 87, 0.3) !important; }
+
+/* Notification colors */
+.r-vkub15 { color: #FF4757 !important; }
+.r-o6sn0f { color: #2ECC71 !important; }
+
+/* User URL */
+[data-testid="UserUrl"] { color: #FF4757 !important; }
+
+/* Show more buttons */
+[role="link"].r-1vvnge1 * { color: #FF4757 !important; }
+
+/* Search filter ring */
+.r-vhj8yc { border-color: #000 !important; }
+
+/* Settings borders */
+.r-1pbtemp { border-right-color: #000 !important; }
+
+/* Password/input prompt */
+.r-9cip40 { box-shadow: #000 0px 0px 0px 2px !important; }
+
+/* Side tweet button hover */
+.r-1vtznih,
+.r-yuvema { background-color: rgba(255, 71, 87, 0.8) !important; }
+
+/* Video upload progress */
+[style*="background-color: rgb(2, 17, 61)"].r-1xfd6ze {
+  background-color: #2ECC71 !important;
+}
+
+/* "You can reply" box */
+.r-rgqbpe { background-color: #FECA57 !important; }
+
+/* Error state */
+.r-1kwlb9n { background-color: #FF4757 !important; }
+
+/* Accent text spreads */
+.r-13gxpu9 { color: #FF4757 !important; }
+.r-1cvl2hr,
+.r-1cvl2hr * { color: #FF4757 !important; }
+.r-l5o3uw { background-color: #FF4757 !important; }
+
+/* DM chat bubbles */
+.r-eff69c { background-color: #FF4757 !important; color: #FFF !important; }
+.r-hjejmn { background-color: #FFF !important; border: 2px solid #000 !important; }
+
+/* Backdrop blur behind images */
+.r-11yh6sk.r-buy8e9 { backdrop-filter: blur(4px) !important; }
+
+/* ============================================================
+   4. STRUCTURAL — data-testid
+   ============================================================ */
+[data-testid="primaryColumn"] {
+  background-color: #FFFDF5 !important;
+  border: 4px solid #000 !important;
+  box-shadow: 8px 8px 0 0 #000 !important;
+  margin: 8px !important;
+}
+
+[data-testid="primaryColumn"] > div {
+  background-color: #FFFDF5 !important;
+}
+
+[data-testid="sidebarColumn"] {
+  background-color: #FFFDF5 !important;
+  border: 4px solid #000 !important;
+  box-shadow: 6px 6px 0 0 #000 !important;
+}
+
+[data-testid="tweet"] {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  margin: 6px 0 !important;
+  padding: 12px !important;
+}
+
+[data-testid="tweet"]:hover {
+  background-color: #FECA57 !important;
+}
+
+[data-testid="tweetText"] {
+  font-weight: 700 !important;
+  color: #000 !important;
+  font-size: 16px !important;
+  line-height: 1.4 !important;
+}
+
+[data-testid="tweetButton"] {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+[data-testid="tweetButtonInline"] {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  font-weight: 800 !important;
+}
+
+/* Avatars */
+[data-testid^="UserAvatar-Container"] {
+  border-radius: 0 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+}
+[data-testid^="UserAvatar-Container"] img { border-radius: 0 !important; }
+
+/* Search */
+input[type="text"][data-testid="SearchBox_Search_Input"],
+input[data-testid="SearchBox_Search_Input"] {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+/* Links */
+[data-testid="tweet"] a[href],
+[data-testid="tweetText"] a[href] {
+  color: #FF4757 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+/* Compose */
+textarea[data-testid="tweetTextarea_0"],
+[contenteditable="true"][data-testid="tweetTextarea_0"] {
+  color: #000 !important;
+  font-weight: 600 !important;
+  background-color: #FFFDF5 !important;
+}
+
+/* Loading */
+[aria-label="Loading…"] { background-color: #FFFDF5 !important; }
+
+/* Cards */
+[data-testid="cardWrapper"],
+[data-testid="placementTracking"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  background-color: #FFF !important;
+}
+
+/* Block confirm */
+[data-testid="confirmationSheetConfirm"] {
+  background-color: #FF4757 !important;
+  color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  font-weight: 800 !important;
+}
+
+/* ============================================================
+   5. SVG / ICONS
+   ============================================================ */
+[data-testid="icon-verified"] > g > [fill="#1d9bf0"],
+[data-testid="verificationBadge"] > g > [fill="#1d9bf0"] {
+  fill: #FF4757 !important;
+}
+
+/* Yellow verified gradient */
+[data-testid="icon-verified"] > g > g > [fill^="url(#"],
+[data-testid="verificationBadge"] > g > g > [fill^="url(#"] {
+  fill: #FECA57 !important;
+}
+[data-testid="icon-verified"] > g > g > [fill="#d18800"],
+[data-testid="verificationBadge"] > g > g > [fill="#d18800"] {
+  fill: #FECA57 !important;
+}
+
+[stroke="#1D9BF0"],
+[stroke="#1d9bf0"] { stroke: #FF4757 !important; }
+
+path[fill="#61BCF6"] { fill: #FECA57 !important; }
+path[fill="#F16888"] { fill: #FF4757 !important; }
+path[fill="#FD9E1A"] { fill: #FECA57 !important; }
+
+/* ============================================================
+   6. TWEET METADATA — name, handle, timestamp, counts
+   ============================================================ */
+
+/* Display name — bold */
+[data-testid="User-Name"],
+[data-testid="UserName"] {
+  font-weight: 800 !important;
+  color: #000 !important;
+}
+
+[data-testid="User-Name"] a,
+[data-testid="UserName"] a {
+  color: #000 !important;
+  text-decoration: none !important;
+}
+
+[data-testid="User-Name"] a:hover,
+[data-testid="UserName"] a:hover {
+  color: #FF4757 !important;
+  text-decoration: underline !important;
+}
+
+/* Timestamp — small muted */
+[data-testid="tweet"] time,
+[data-testid="User-Name"] time {
+  color: #000 !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+}
+
+/* Engagement counts (reply/retweet/like/view counts under tweet) */
+[data-testid="tweet"] [href*="/status/"] {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Tweet action bar (reply/retweet/like/share row) */
+[role="group"][data-testid="tweet"] + div,
+[data-testid="tweet"] [role="group"] {
+  border-top: 2px solid #000 !important;
+  padding-top: 8px !important;
+}
+
+/* ============================================================
+   7. SIDEBAR WIDGETS — trending, who-to-follow
+   ============================================================ */
+
+/* Trending section container */
+[data-testid="sidebarColumn"] section,
+[data-testid="sidebarColumn"] [role="complementary"] {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  margin-bottom: 12px !important;
+}
+
+/* Trending items */
+[data-testid="trend"] {
+  border-bottom: 2px solid #000 !important;
+  padding: 10px 12px !important;
+}
+
+[data-testid="trend"]:hover {
+  background-color: #FECA57 !important;
+}
+
+/* Trending rank number + category */
+[data-testid="trend"] [dir="auto"] {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* "What's happening" header */
+[data-testid="sidebarColumn"] h2,
+[data-testid="sidebarColumn"] [role="heading"] {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+  border-bottom: 3px solid #000 !important;
+  padding-bottom: 8px !important;
+}
+
+/* Who-to-follow card */
+[data-testid="UserCell"] {
+  border-bottom: 2px solid #000 !important;
+  padding: 10px 12px !important;
+}
+
+[data-testid="UserCell"]:hover {
+  background-color: #FECA57 !important;
+}
+
+/* Follow button in sidebar */
+[data-testid="UserCell"] [role="button"] {
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: 2px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #FF4757 !important;
+  font-weight: 800 !important;
+}
+
+/* ============================================================
+   8. CARD PREVIEWS + QUOTE TWEETS + MEDIA
+   ============================================================ */
+
+/* Link preview cards in tweets */
+[data-testid="card.wrapper"],
+[data-testid="SummaryCard"],
+[data-testid="PlayerCard"],
+[data-testid="ImageCard"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  background-color: #FFF !important;
+  border-radius: 0 !important;
+}
+
+/* Quote tweet (embedded tweet inside tweet) */
+[data-testid="quoteTweet"],
+[data-testid="tweet"] [data-testid="tweet"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #FF4757 !important;
+  background-color: #FFFDF5 !important;
+  margin: 8px 0 !important;
+}
+
+/* Media containers (images/videos in tweets) */
+[data-testid="tweetPhoto"],
+[data-testid="videoPlayer"],
+[data-testid="previewInterstitial"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  border-radius: 0 !important;
+}
+
+/* Image grid in tweets (multi-image) */
+[data-testid="tweet"] [style*="grid-template"] {
+  gap: 3px !important;
+}
+
+/* Sensitive media overlay */
+[data-testid="button"] + [data-testid="placementTracking"],
+[data-testid="sensitiveMedia"] {
+  background-color: #FFFDF5 !important;
+  border: 3px solid #000 !important;
+}
+
+/* ============================================================
+   9. DROPDOWN MENUS + MODALS + COMPOSER
+   ============================================================ */
+
+/* Dropdown menu (three-dot, more) */
+[role="menu"],
+[role="menuitem"],
+[role="menuitemcheckbox"] {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 6px 6px 0 0 #000 !important;
+}
+
+[role="menuitem"]:hover,
+[role="menuitemcheckbox"]:hover {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+}
+
+[role="menuitem"] [dir="auto"],
+[role="menuitemcheckbox"] [dir="auto"] {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Modal overlay (image lightbox, tweet detail, compose modal) */
+[aria-modal="true"],
+[data-testid="mask"],
+[data-testid="sheetDialog"] {
+  background-color: #FFFDF5 !important;
+  border: 4px solid #000 !important;
+  box-shadow: 8px 8px 0 0 #000 !important;
+}
+
+/* Modal close button */
+[aria-label="Close"],
+[data-testid="app-bar-close"] {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+  border: 2px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+  font-weight: 800 !important;
+}
+
+/* Composer toolbar (emoji, gif, poll, media buttons) */
+[data-testid="toolBar"] [role="button"],
+[data-testid="tweetButton"] ~ [role="button"] {
+  border: 2px solid #000 !important;
+  box-shadow: 2px 2px 0 0 #000 !important;
+  background-color: #FFF !important;
+}
+
+[data-testid="toolBar"] [role="button"]:hover {
+  background-color: #FECA57 !important;
+}
+
+/* ============================================================
+   10. POLLS + NOTIFICATIONS + PROFILE TABS + DANGER
+   ============================================================ */
+
+/* Poll container */
+[data-testid="poll"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  background-color: #FFF !important;
+}
+
+/* Poll choice */
+[data-testid="poll"] [role="radio"],
+[data-testid="poll"] [role="button"] {
+  border: 2px solid #000 !important;
+  background-color: #FFFDF5 !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Notification badge (bell icon unread count) */
+[data-testid="AppTabBar_Notifications"] [data-testid="badge"],
+[aria-label*="notif"] [data-testid="badge"] {
+  background-color: #FF4757 !important;
+  color: #FFF !important;
+  border: 2px solid #000 !important;
+  font-weight: 800 !important;
+}
+
+/* Profile tabs (Posts, Replies, Media, Likes) */
+[data-testid="primaryColumn"] [role="tablist"] {
+  border-bottom: 4px solid #000 !important;
+  background-color: #FFFDF5 !important;
+}
+
+[data-testid="UserRating_AppTabBar_Profile"] [role="tab"],
+[data-testid="primaryColumn"] [role="tablist"] [role="tab"] {
+  border-bottom: 4px solid transparent !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  color: #000 !important;
+}
+
+[data-testid="primaryColumn"] [role="tablist"] [role="tab"][aria-selected="true"] {
+  border-bottom: 4px solid #FF4757 !important;
+  color: #FF4757 !important;
+}
+
+/* Unfollow / danger buttons */
+[data-testid$="-unfollow"],
+[role="button"][data-testid="confirmationSheetCancel"] {
+  border-color: #FF4757 !important;
+  background-color: rgba(255, 71, 87, 0.1) !important;
+  color: #FF4757 !important;
+  font-weight: 800 !important;
+  border: 2px solid #FF4757 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+}
+
+/* ============================================================
+   11. MISC — empty states, profile header, tweet detail
+   ============================================================ */
+
+/* Empty state ("No tweets yet", "No replies") */
+[data-testid="emptyState"],
+[role="presentation"] [dir="auto"] {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* Profile header banner */
+[data-testid="UserRating_ProfileBanner"],
+[data-testid="profileHeaderPhoto"] {
+  border-bottom: 4px solid #000 !important;
+}
+
+/* Profile display name + bio */
+[data-testid="UserDescription"],
+[data-testid="UserProfileHeader_Items"] {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+/* Tweet detail view (reply chain) */
+[data-testid="tweet"] + [data-testid="tweet"] {
+  border-top: 4px solid #000 !important;
+}
+
+/* "Show more" / "Show this thread" links */
+[data-testid="tweet"] [role="link"] {
+  color: #FF4757 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+}
+
+/* Settings panel nav */
+[data-testid="settingsMenu"] {
+  background-color: #FFFDF5 !important;
+  border-right: 4px solid #000 !important;
+}
+
+/* ============================================================
+   12. GENERIC BUTTONS + TABS + HEADER
+   ============================================================ */
+[role="button"]:not([data-testid="tweetButton"]):not([data-testid="tweetButtonInline"]):not([role="menuitem"]):not([role="menuitemcheckbox"]) {
+  border: 2px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+  background-color: #FFF !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+[role="tab"] {
+  border-bottom: 4px solid transparent !important;
+  font-weight: 700 !important;
+  color: #000 !important;
+}
+
+[role="tab"][aria-selected="true"] {
+  border-bottom: 4px solid #FF4757 !important;
+  color: #FF4757 !important;
+}
+
+header[role="banner"] {
+  background-color: #FFFDF5 !important;
+  border-bottom: 4px solid #000 !important;
+}
+
+/* Left nav rail */
+[aria-label="Primary"] nav,
+nav[aria-label="Navigation"] {
+  background-color: #FFFDF5 !important;
+  border-right: 4px solid #000 !important;
+}
+
+/* Nav rail items */
+[aria-label="Primary"] [role="link"],
+[aria-label="Primary"] [role="button"] {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+[aria-label="Primary"] [role="link"]:hover,
+[aria-label="Primary"] [role="button"]:hover {
+  background-color: #FECA57 !important;
+}
+
+/* Tweet actions hover */
+[data-testid="like"]:hover,
+[data-testid="unlike"]:hover,
+[data-testid="retweet"]:hover,
+[data-testid="unretweet"]:hover,
+[data-testid="reply"]:hover {
+  border: 2px solid #000 !important;
+  box-shadow: 2px 2px 0 0 #000 !important;
+  background-color: #FECA57 !important;
+}
+
+[data-testid="like"],
+[data-testid="unlike"],
+[data-testid="retweet"],
+[data-testid="unretweet"],
+[data-testid="reply"] {
+  border: 2px solid transparent !important;
+}
+
+/* ============================================================
+   13. SCROLLBAR + SELECTION
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFDF5 !important;
+  border-left: 2px solid #000 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #000 !important;
+  border: 2px solid #FFFDF5 !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4757 !important;
+}
+
+::selection {
+  background: #FECA57 !important;
+  color: #000 !important;
+}

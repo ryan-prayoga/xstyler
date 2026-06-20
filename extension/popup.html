@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XStyler</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header class="xstyler-header">
+    <h1>XStyler</h1>
+    <p class="xstyler-subtitle">Twitter/X Theme Loader</p>
+  </header>
+
+  <main class="xstyler-main">
+    <button id="import-btn" class="xstyler-import" type="button">Import Theme</button>
+    <input id="file-input" type="file" accept=".css" hidden>
+
+    <ul id="theme-list" class="xstyler-list"></ul>
+
+    <p id="empty-state" class="xstyler-empty" hidden>No themes yet. Import a .css file to get started.</p>
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>

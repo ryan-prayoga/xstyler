@@ -1,0 +1,185 @@
+/* XStyler popup — developer-tool aesthetic, not a marketing page.
+ * Light theme, compact, utilitarian. Inspired by uBlock Origin / DevTools.
+ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 320px;
+  max-height: 480px;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  color: #1a1a1a;
+  background: #fff;
+  overflow-y: auto;
+}
+
+/* ---- Header ---- */
+.xstyler-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid #e6e6e6;
+  background: #fafafa;
+}
+
+.xstyler-header h1 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.2px;
+}
+
+.xstyler-subtitle {
+  margin: 2px 0 0;
+  font-size: 11px;
+  color: #666;
+}
+
+/* ---- Main ---- */
+.xstyler-main {
+  padding: 10px 12px 12px;
+}
+
+/* ---- Import button ---- */
+.xstyler-import {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #fff;
+  background: #1d9bf0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.12s ease;
+}
+
+.xstyler-import:hover {
+  background: #1a8cd8;
+}
+
+.xstyler-import:active {
+  background: #177bbf;
+}
+
+/* ---- Theme list ---- */
+.xstyler-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.xstyler-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 8px;
+  border-bottom: 1px solid #eee;
+}
+
+.xstyler-list-item:last-child {
+  border-bottom: none;
+}
+
+.xstyler-list-item:hover {
+  background: #f7f7f7;
+}
+
+/* ---- Radio ---- */
+.xstyler-radio {
+  flex-shrink: 0;
+  margin-top: 2px;
+  cursor: pointer;
+  accent-color: #1d9bf0;
+}
+
+/* ---- Theme info block ---- */
+.xstyler-theme-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.xstyler-theme-name {
+  font-weight: 600;
+  color: #1a1a1a;
+  word-break: break-word;
+}
+
+.xstyler-theme-meta {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #666;
+  word-break: break-word;
+}
+
+.xstyler-theme-desc {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #888;
+  font-style: italic;
+}
+
+.xstyler-theme-badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 5px;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: #555;
+  background: #eee;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* ---- Remove button ---- */
+.xstyler-remove {
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 2px 6px;
+  font-size: 11px;
+  color: #e0245e;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background 0.12s ease;
+}
+
+.xstyler-remove:hover {
+  background: #fde2e9;
+}
+
+/* ---- Empty state ---- */
+.xstyler-empty {
+  padding: 24px 12px;
+  text-align: center;
+  color: #666;
+  font-size: 12px;
+}
+
+/* ---- Scrollbar (thin, subtle) ---- */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
