@@ -17,3 +17,10 @@ landing/extension/*.zip
 # Node (kalau nanti butuh untuk build tools)
 node_modules/
 package-lock.json
+
+# Playwright MCP artifacts
+.playwright-mcp/
+
+# Screenshots (dev only)
+*.png
+!extension/icons/*.png

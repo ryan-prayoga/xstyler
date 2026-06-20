@@ -23,7 +23,7 @@
  *     oldValue: any, newValue: any }
  * ============================================================ */
 
-const BUNDLED_VERSION = '1.2.0';
+const BUNDLED_VERSION = '1.3.0';
 const REMOTE_THEME_URL = 'https://xstyler.ryanprayoga.dev/default-theme.css';
 const TWITTER_TAB_URLS = ['https://twitter.com/*', 'https://x.com/*'];
 

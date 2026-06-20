@@ -25,20 +25,20 @@
  * Applied synchronously before the async storage read below,
  * so users on the default theme never see unstyled Twitter.
  *
- * v1.2.0 — comprehensive override covering 13 areas:
- * root vars, inline styles, .r-* classes, data-testid, SVG,
- * tweet metadata, sidebar widgets, cards/media, modals/dropdowns,
- * polls/notifications/tabs/danger buttons, misc, generic, scrollbar.
+ * v1.3.0 — fixes from live DOM inspection of twitter.com:
+ * class-based colors (.r-bcqeeo, .r-qvutc0), new gray rgb(83,100,113),
+ * post/follow buttons, progress bar, carousel, tab bg, borders.
  * ---------------------------------------------------------- */
 const DEFAULT_THEME_CSS = `/* theme-name: Neo-Brutalism */
 /* theme-author: Ryan Prayoga */
 /* theme-description: Loud. Raw. Unapologetic. Hard shadows, thick black borders, saturated color blocks. */
-/* theme-version: 1.2.0 */
+/* theme-version: 1.3.0 */
 /* theme-recommended-twitter-theme: Default (Light) */
 
 /* ============================================================
-   XStyler — Neo-Brutalism default theme (v1.2.0)
+   XStyler — Neo-Brutalism default theme (v1.3.0)
    Comprehensive Twitter/X override.
+   Revised after live DOM inspection of twitter.com/x.com.
 
    STRATEGY:
    1. Kill inline body bg + hijack Twitter CSS vars
@@ -754,6 +754,219 @@ nav[aria-label="Navigation"] {
   background: #FECA57 !important;
   color: #000 !important;
 }
+
+/* ============================================================
+   14. v1.3.0 FIXES — from live DOM inspection of twitter.com
+   Twitter uses CLASS-BASED colors (not inline style) for most
+   text. Our inline-style selectors missed these entirely.
+   ============================================================ */
+
+/* ---- Gray text: rgb(83, 100, 113) — @handle, timestamp, counts ---- */
+[style*="color: rgb(83, 100, 113)"],
+.r-1ttztb7[style*="color: rgb(83, 100, 113)"] {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+/* Class-based color carriers — Twitter sets color via .r-* classes */
+.r-bcqeeo,
+.r-qvutc0,
+.r-poiln3,
+.r-1ttztb7 {
+  color: #000 !important;
+}
+
+/* Blue text via class (not inline) — "Everyone can reply", links */
+.r-1q142lx,
+.r-17bb8tj,
+a.r-bcqeeo,
+a.r-qvutc0 {
+  color: #FF4757 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+}
+
+/* ---- Post button (nav rail) — was rgb(15, 20, 25) ---- */
+[data-testid="SideNav_NewTweet_Button"] {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+/* ---- Follow buttons — was rgb(15, 20, 25) ---- */
+[data-testid$="-follow"] {
+  background-color: #000 !important;
+  color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #FF4757 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+[data-testid$="-follow"]:hover {
+  background-color: #FF4757 !important;
+  color: #FFF !important;
+}
+
+/* ---- "See new posts" button — was rgb(29, 155, 240) ---- */
+[aria-label*="New posts"],
+[aria-label*="new posts"] {
+  background-color: #FF4757 !important;
+  color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+/* ---- Progress bar — was rgb(29, 155, 240) ---- */
+[data-testid="progressBar-bar"] {
+  background-color: #FF4757 !important;
+}
+
+/* ---- Unread badge — was rgb(29, 155, 240) ---- */
+[aria-label*="unread"] {
+  background-color: #FF4757 !important;
+  border: 2px solid #000 !important;
+}
+
+/* ---- Carousel prev/next — was rgba(15, 20, 25, 0.75) ---- */
+[aria-label="Previous"],
+[aria-label="Next"] {
+  background-color: #FECA57 !important;
+  color: #000 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+}
+
+/* ---- "For you/Following" tab bg — was rgba(255, 255, 255, 0.85) ---- */
+.r-6026j,
+.r-105ug2t,
+.r-173mn98,
+.r-1e5uvyk,
+.r-1xsrhxi,
+.r-1867qdf,
+.r-1upvrn0,
+.r-8oi148,
+.r-1tfmumk {
+  background-color: rgba(255, 253, 245, 0.9) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ---- Border color rgb(159, 181, 195) → brutalist black ---- */
+.r-105ug2t,
+.r-173mn98,
+.r-1e5uvyk,
+.r-6026j {
+  border-color: #000 !important;
+}
+
+/* ---- Gray placeholder boxes rgb(207, 217, 222) ---- */
+.r-1bimlpy {
+  background-color: #FECA57 !important;
+  border: 2px solid #000 !important;
+}
+
+/* ---- Subtle bg rgb(239, 243, 24) → cream ---- */
+.r-109y4c4,
+.r-1sw30gj,
+.r-l00any {
+  background-color: #FFFDF5 !important;
+}
+
+/* ---- Border rgb(207, 217, 222) → black ---- */
+.r-sdzlij,
+.r-1phboty,
+.r-lrvibr,
+.r-4iw3lz,
+.r-1xk2f4g,
+.r-wwvuq4,
+.r-92ng3h,
+.r-2yi16,
+.r-1qi8awa,
+.r-adacv,
+.r-eqz5dr,
+.r-1wbh5a2,
+.r-eafdt9,
+.r-3nhw2p,
+.r-brjqxz,
+.r-1ets6dv {
+  border-color: #000 !important;
+}
+
+/* ---- Border rgb(239, 243, 244) → black ---- */
+.r-jxzhtn,
+.r-8e33y0,
+.r-1lnugsr,
+.r-184en5c,
+.r-1abdc3e,
+.r-1lg4w6u,
+.r-f8sm7e,
+.r-1ye8kvj,
+.r-1ifxtd0,
+.r-14lw9ot,
+.r-16y2uox {
+  border-color: #000 !important;
+}
+
+/* ---- Grok/Chat drawer header ---- */
+[data-testid="GrokDrawerHeader"],
+[data-testid="chat-drawer-main"] {
+  background-color: #FFFDF5 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+}
+
+/* ---- Light mode scrollbar-color (Twitter sets inline) ---- */
+[style*="scrollbar-color: rgb(185, 202, 211) rgb(247, 249, 249)"] {
+  scrollbar-color: #000 transparent !important;
+  scrollbar-width: thin !important;
+}
+
+/* ---- Video player bg (keep dark for contrast) ---- */
+video {
+  background-color: #000 !important;
+}
+
+/* ---- Tweet engagement counts — make bold black ---- */
+[data-testid="tweet"] [href*="/status/"] span,
+[data-testid="app-text-transition-container"] {
+  color: #000 !important;
+  font-weight: 800 !important;
+}
+
+/* ---- "Ad" label ---- */
+[data-testid="tweet"] [data-testid="placementTracking"] ~ * {
+  color: #000 !important;
+  font-weight: 700 !important;
+}
+
+/* ---- Compose box "What's happening?" placeholder ---- */
+[data-testid="tweetTextarea_0"]:empty::before {
+  color: #000 !important;
+  font-weight: 600 !important;
+}
+
+/* ---- Sidebar "What's happening" + "Who to follow" section headers ---- */
+[data-testid="sidebarColumn"] [role="heading"] h2,
+[data-testid="sidebarColumn"] h2 {
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  border-bottom: 3px solid #000 !important;
+  padding-bottom: 6px !important;
+  color: #000 !important;
+}
+
+/* ---- Bottom bar (mobile) ---- */
+[data-testid="BottomBar"] {
+  background-color: #FFFDF5 !important;
+  border-top: 4px solid #000 !important;
+}
+
 `;
 
 /* ============================================================
