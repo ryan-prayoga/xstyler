@@ -32,11 +32,11 @@
 const DEFAULT_THEME_CSS = `/* theme-name: Neo-Brutalism */
 /* theme-author: Ryan Prayoga */
 /* theme-description: Loud. Raw. Unapologetic. Hard shadows, thick black borders, saturated color blocks. */
-/* theme-version: 1.5.0 */
+/* theme-version: 1.5.1 */
 /* theme-recommended-twitter-theme: Default (Light) */
 
 /* ============================================================
-   XStyler — Neo-Brutalism default theme (v1.5.0)
+   XStyler — Neo-Brutalism default theme (v1.5.1)
    Comprehensive Twitter/X override.
    Revised after live DOM inspection of twitter.com/x.com.
    v1.4.0: fixes from full element dump — <a> default blue, verified
@@ -241,8 +241,13 @@ body.Default {
 
 [data-testid="sidebarColumn"] {
   background-color: #FFFDF5 !important;
-  border: 4px solid #000 !important;
-  box-shadow: 6px 6px 0 0 #000 !important;
+  /* NO outer frame: the column is full page height (~5000px) but its
+     content is short, so a 4px border + 6px shadow rendered as a long
+     empty black bar down the right edge (looked like a "cut line").
+     Inner widget cards carry their own border+shadow as floating
+     blocks. Clip horizontally (clip, not hidden → sticky unaffected)
+     so card shadows don't poke into the feed gutter. */
+  overflow-x: clip !important;
 }
 
 [data-testid="tweet"] {
@@ -673,7 +678,7 @@ path[fill="#FD9E1A"] { fill: #FECA57 !important; }
 /* ============================================================
    12. GENERIC BUTTONS + TABS + HEADER
    ============================================================ */
-[role="button"]:not([data-testid="tweetButton"]):not([data-testid="tweetButtonInline"]):not([role="menuitem"]):not([role="menuitemcheckbox"]):not([data-testid$="-follow"]):not([data-testid$="-unfollow"]):not([style*="linear-gradient"]):not([data-testid="AppTabBar_More_Menu"]) {
+[role="button"]:not([data-testid="tweetButton"]):not([data-testid="tweetButtonInline"]):not([role="menuitem"]):not([role="menuitemcheckbox"]):not([data-testid$="-follow"]):not([data-testid$="-unfollow"]):not([style*="linear-gradient"]):not([data-testid="AppTabBar_More_Menu"]):not(:has(> svg[data-testid="icon-verified"])):not(:has(> svg[data-testid="verificationBadge"])) {
   border: 2px solid #000 !important;
   box-shadow: 3px 3px 0 0 #000 !important;
   background-color: #FFF !important;
@@ -928,6 +933,21 @@ a.r-qvutc0 {
   background-color: #FFFDF5 !important;
   border: 3px solid #000 !important;
   box-shadow: 4px 4px 0 0 #000 !important;
+}
+
+/* ---- Grok + Messages docked drawer containers ----
+   Each collapsed dock (~400px wide) carries a translucent cream bg +
+   backdrop-filter: blur(12px) from a shared .r-* class, rendering as
+   a frosted-glass panel floating left of the Grok/DM buttons. Kill it
+   so only the (bordered) buttons show. div[...] specificity beats the
+   .r-* blur rule. Expanded drawer content keeps its own child bg. */
+div[data-testid="GrokDrawer"],
+div[data-testid="chat-drawer-root"] {
+  background-color: transparent !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* ---- Light mode scrollbar-color (Twitter sets inline) ---- */
@@ -1394,6 +1414,33 @@ nav[aria-label="Primary"] a span {
 }
 nav[aria-label="Primary"] a > div {
   background-color: transparent !important;
+}
+
+/* ---- J. PROFILE POLISH ----------------------------------------
+   Edit profile button shipped thin (1px, no shadow) — bring it up to
+   the brutalist button standard. Following/Followers counts read as
+   plain text; uppercase + bold them so the stats pop, yellow hover. */
+[data-testid="editProfileButton"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+a[href$="/following"],
+a[href$="/verified_followers"],
+a[href$="/followers"] {
+  text-transform: uppercase !important;
+}
+a[href$="/following"] span,
+a[href$="/verified_followers"] span,
+a[href$="/followers"] span {
+  font-weight: 800 !important;
+}
+a[href$="/following"]:hover,
+a[href$="/verified_followers"]:hover,
+a[href$="/followers"]:hover {
+  background-color: #FECA57 !important;
 }
 
 `;

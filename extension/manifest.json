@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "XStyler",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Import dan apply tema CSS ke Twitter/X. Ekstensi kosong — lu yang kontrol temanya.",
   "permissions": ["storage"],
   "host_permissions": [
