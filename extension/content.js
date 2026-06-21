@@ -32,11 +32,11 @@
 const DEFAULT_THEME_CSS = `/* theme-name: Neo-Brutalism */
 /* theme-author: Ryan Prayoga */
 /* theme-description: Loud. Raw. Unapologetic. Hard shadows, thick black borders, saturated color blocks. */
-/* theme-version: 1.4.0 */
+/* theme-version: 1.5.0 */
 /* theme-recommended-twitter-theme: Default (Light) */
 
 /* ============================================================
-   XStyler — Neo-Brutalism default theme (v1.4.0)
+   XStyler — Neo-Brutalism default theme (v1.5.0)
    Comprehensive Twitter/X override.
    Revised after live DOM inspection of twitter.com/x.com.
    v1.4.0: fixes from full element dump — <a> default blue, verified
@@ -290,12 +290,14 @@ body.Default {
 }
 [data-testid^="UserAvatar-Container"] img { border-radius: 0 !important; }
 
-/* Search */
+/* Search — border lives on the parent form (icon+input as one box,
+   see sec H). Input itself is borderless so the magnifier isn't
+   fenced off in its own cell by the input's left border. */
 input[type="text"][data-testid="SearchBox_Search_Input"],
 input[data-testid="SearchBox_Search_Input"] {
-  background-color: #FFF !important;
-  border: 3px solid #000 !important;
-  box-shadow: 4px 4px 0 0 #000 !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
   color: #000 !important;
   font-weight: 600 !important;
 }
@@ -319,9 +321,10 @@ textarea[data-testid="tweetTextarea_0"],
 /* Loading */
 [aria-label="Loading…"] { background-color: #FFFDF5 !important; }
 
-/* Cards */
-[data-testid="cardWrapper"],
-[data-testid="placementTracking"] {
+/* Cards (NOT placementTracking — it wraps tracking pixels too small
+   to border; cellInnerDiv provides the visible frame for promoted
+   tweets. Bordering it produced a stray ~7px black notch.) */
+[data-testid="cardWrapper"] {
   border: 3px solid #000 !important;
   box-shadow: 4px 4px 0 0 #000 !important;
   background-color: #FFF !important;
@@ -593,15 +596,17 @@ path[fill="#FD9E1A"] { fill: #FECA57 !important; }
   font-weight: 800 !important;
 }
 
-/* Profile tabs (Posts, Replies, Media, Likes) */
+/* Profile tabs (Posts, Replies, Media, Likes) — NO tablist border:
+   the per-tab border-bottom (below) IS the single divider line.
+   A tablist border here sat 4px below the tab border → double line. */
 [data-testid="primaryColumn"] [role="tablist"] {
-  border-bottom: 4px solid #000 !important;
+  border-bottom: none !important;
   background-color: #FFFDF5 !important;
 }
 
 [data-testid="UserRating_AppTabBar_Profile"] [role="tab"],
 [data-testid="primaryColumn"] [role="tablist"] [role="tab"] {
-  border-bottom: 4px solid transparent !important;
+  border-bottom: 4px solid #000 !important;
   font-weight: 800 !important;
   text-transform: uppercase !important;
   color: #000 !important;
@@ -668,7 +673,7 @@ path[fill="#FD9E1A"] { fill: #FECA57 !important; }
 /* ============================================================
    12. GENERIC BUTTONS + TABS + HEADER
    ============================================================ */
-[role="button"]:not([data-testid="tweetButton"]):not([data-testid="tweetButtonInline"]):not([role="menuitem"]):not([role="menuitemcheckbox"]) {
+[role="button"]:not([data-testid="tweetButton"]):not([data-testid="tweetButtonInline"]):not([role="menuitem"]):not([role="menuitemcheckbox"]):not([data-testid$="-follow"]):not([data-testid$="-unfollow"]):not([style*="linear-gradient"]):not([data-testid="AppTabBar_More_Menu"]) {
   border: 2px solid #000 !important;
   box-shadow: 3px 3px 0 0 #000 !important;
   background-color: #FFF !important;
@@ -829,8 +834,11 @@ a.r-qvutc0 {
   background-color: #FF4757 !important;
 }
 
-/* ---- Unread badge — was rgb(29, 155, 240) ---- */
-[aria-label*="unread"] {
+/* ---- Unread count badge — was rgb(29, 155, 240).
+   NB: [aria-label*="unread"] ALSO matches the Notifications nav <a>
+   ("N unread notification"), which painted the ENTIRE nav item red.
+   Exclude links so only the small count bubble is styled. ---- */
+[aria-label*="unread"]:not(a):not([role="link"]) {
   background-color: #FF4757 !important;
   border: 2px solid #000 !important;
 }
@@ -1143,6 +1151,249 @@ a[aria-label="X"] {
   border: 2px solid #000 !important;
   box-shadow: 2px 2px 0 0 #000 !important;
   background-color: #FECA57 !important;
+}
+
+/* ============================================================
+   16. v1.5.0 FIXES — from screenshot review
+   (Post / Home / Notifications / Explore / DM)
+   A. Follow buttons rendered as empty pills (white-on-white text)
+   B. Inconsistent card borders (notif / news / feed rows missed)
+   C. Gradient buttons (Show more / Football Hub) untouched
+   D. DM / Chat page barely themed (blue bubbles, plain rows)
+   E. Soft-rounded grey cards (football schedule widget)
+   F. Mixed border-radius — enforce sharp brutalist corners
+   ============================================================ */
+
+/* ---- A. FOLLOW / UNFOLLOW BUTTON --------------------------------
+   Generic [role=button] rule no longer repaints these (excluded
+   above). Force inner span/div color so text isn't invisible. */
+[data-testid$="-follow"] {
+  background-color: #000 !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #FF4757 !important;
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+[data-testid$="-follow"] span,
+[data-testid$="-follow"] div {
+  color: #FFF !important;
+}
+[data-testid$="-follow"]:hover {
+  background-color: #FF4757 !important;
+}
+
+/* Following / Unfollow (outlined) — dark text on light fill */
+[data-testid$="-unfollow"] {
+  background-color: #FFFDF5 !important;
+  border: 3px solid #FF4757 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+[data-testid$="-unfollow"] span,
+[data-testid$="-unfollow"] div {
+  color: #FF4757 !important;
+}
+
+/* ---- B. UNIFIED FEED CARD — every timeline/notif/news row ------
+   Twitter wraps each row in cellInnerDiv. Style it as the card so
+   notifications, news and feed rows match tweets. Inner tweet's
+   own frame is neutralised to avoid double borders. */
+[data-testid="cellInnerDiv"] {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  margin: 6px 4px !important;
+}
+[data-testid="cellInnerDiv"] [data-testid="tweet"] {
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+}
+[data-testid="cellInnerDiv"] [data-testid="cellInnerDiv"] {
+  margin: 0 !important;
+}
+
+/* ---- C. FLATTEN GRADIENT BUTTONS (Show more / Football Hub) ----- */
+[style*="linear-gradient"] {
+  background-image: none !important;
+  background-color: #FECA57 !important;
+}
+[role="button"][style*="linear-gradient"],
+a[style*="linear-gradient"] {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  border-radius: 0 !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+[style*="linear-gradient"] span,
+[style*="linear-gradient"] div {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+/* ---- D. DM / CHAT ----------------------------------------------- */
+/* Conversation list rows */
+[data-testid="conversation"] {
+  background-color: #FFF !important;
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  border-radius: 0 !important;
+  margin: 4px 6px !important;
+}
+[data-testid="conversation"]:hover {
+  background-color: #FECA57 !important;
+}
+/* Message bubbles — kill rounding */
+[data-testid="messageEntry"] [style*="border-radius"],
+[data-testid="messageEntry"] > div > div {
+  border-radius: 0 !important;
+}
+/* Sent bubble (Twitter blue, class- or inline-based) → red */
+[data-testid="messageEntry"] [style*="rgb(29, 155, 240)"],
+[data-testid="messageEntry"] [style*="rgb(29,155,240)"] {
+  background-color: #FF4757 !important;
+  border: 2px solid #000 !important;
+  box-shadow: 3px 3px 0 0 #000 !important;
+  border-radius: 0 !important;
+}
+/* Received bubble (light grey) → white framed */
+[data-testid="messageEntry"] [style*="rgb(247, 249, 249)"],
+[data-testid="messageEntry"] [style*="rgb(239, 243, 244)"] {
+  background-color: #FFF !important;
+  border: 2px solid #000 !important;
+  border-radius: 0 !important;
+}
+/* DM composer input bar */
+[data-testid="dmComposerTextInput"],
+[data-testid="DMComposerInput"] {
+  border: 2px solid #000 !important;
+  border-radius: 0 !important;
+  background-color: #FFF !important;
+}
+
+/* ---- E. SOFT GREY CARDS → FLAT WHITE (football widget etc) ------ */
+[style*="background-color: rgb(247, 249, 249)"],
+[style*="background-color: rgb(245, 248, 250)"],
+[style*="background-color: rgb(22, 24, 28)"] {
+  background-color: #FFF !important;
+}
+
+/* ---- F. ENFORCE SHARP CORNERS on themed chrome ----------------- */
+[data-testid="SearchBox_Search_Input"],
+form[role="search"],
+[data-testid="SideNav_NewTweet_Button"],
+[data-testid="tweetButton"],
+[data-testid="tweetButtonInline"],
+[data-testid="cardWrapper"],
+[data-testid="card.wrapper"] {
+  border-radius: 0 !important;
+}
+
+/* Country flags / emoji images — keep full saturation */
+img[draggable="true"][alt],
+img[src*="emoji"],
+img[src*="flag"] {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* ---- C2. X "jf-element" design-system gradient CTAs ------------
+   Verified via live DOM: the "Show more" CTA (and similar X promo
+   widgets) live in a SEPARATE component framework — class
+   "jf-element" with obfuscated "j-*" tokens — set the gradient
+   via a CSS CLASS, not inline style, so [style*="linear-gradient"]
+   never matched. These buttons also include the Football schedule
+   rows (NOT gradient), so we only kill gradients + force readable
+   text — we do NOT box every jf-element button. */
+button.jf-element,
+button.jf-element * {
+  background-image: none !important;
+}
+button.jf-element p,
+button.jf-element span {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+/* ---- G. SIDEBAR NESTED-BORDER CLEANUP -------------------------
+   Verified via live DOM: Twitter's original card wrappers (classes
+   r-14lw9ot / r-jxzhtn / r-1867qdf / r-1phboty, ~350px wide, 1px
+   border, radius 16px or 9999px) sit BEHIND our square 3px card
+   borders. We blackened their border-color but left the radius, so
+   the rounded corners peeked out past the sharp card. Square them
+   (brutalism = no radius) so they align flush and disappear. */
+.r-1ets6dv,
+.r-1phboty,
+.r-14lw9ot,
+.r-jxzhtn,
+.r-1867qdf,
+.r-rs99b7,
+.r-1niwhzg,
+[data-testid="sidebarColumn"] div {
+  border-radius: 0 !important;
+}
+
+/* Tracking pixel — never border (caused a ~7px black notch). Higher
+   specificity (div[...]) to beat the adopted-stylesheet card rule. */
+div[data-testid="placementTracking"] {
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* ---- H. TAB INDICATOR + SEARCH FIELD --------------------------- */
+
+/* For You / Following floating tab indicator uses inline
+   background-color: rgb(29,155,240). The generic blue-inline rule
+   (sec 2) recolored it red but also added a 3px border + hard shadow
+   → black blob on a 6px bar; and it sat 4px above the divider → a
+   second line. We mark the active tab via its own border-bottom (red)
+   instead, so just hide this floating indicator entirely. */
+[role="tablist"] [style*="rgb(29, 155, 240)"],
+[role="tablist"] [style*="rgb(29,155,240)"] {
+  display: none !important;
+}
+
+/* Search field: border the FORM so the magnifier icon + input + clear
+   button live inside one box. Verified via live DOM — the input has a
+   parent <form>, and bordering the input alone fenced the icon off in
+   its own cell. */
+form:has([data-testid="SearchBox_Search_Input"]) {
+  border: 3px solid #000 !important;
+  box-shadow: 4px 4px 0 0 #000 !important;
+  border-radius: 0 !important;
+  background-color: #FFF !important;
+}
+
+/* ---- I. ACTIVE NAV ITEM MARKER -------------------------------
+   Twitter marks the active Primary-nav item only by swapping to a
+   filled icon + bolding its label container with class r-b88u0q
+   (font-weight 700) — too subtle next to the loud feed, and there's
+   no aria-current to hook. r-b88u0q is a shared bold-700 atomic
+   class, but INSIDE a Primary-nav link it appears ONLY on the active
+   item, so :has() scopes it reliably. Give it a brutalist highlight
+   (inset shadow → no layout shift). */
+nav[aria-label="Primary"] a[role="link"]:has(.r-b88u0q) {
+  background-color: #FECA57 !important;
+  box-shadow: inset 7px 0 0 0 #FF4757, inset 0 0 0 2px #000 !important;
+  border-radius: 0 !important;
+}
+
+/* Twitter's nav hover paints a ROUNDED inner pill (the icon+label
+   flex wrapper, radius 9999px) tinted by a translucent overlay — it
+   peeked out as a rounded, darker-yellow patch inside our rectangular
+   a:hover bg. Square it + make it transparent so the hover/active
+   surface is the <a>'s own rectangular bg (single tone). Direct child
+   only (a > div) so the unread badge bubble keeps its red bg. */
+nav[aria-label="Primary"] a div,
+nav[aria-label="Primary"] a span {
+  border-radius: 0 !important;
+}
+nav[aria-label="Primary"] a > div {
+  background-color: transparent !important;
 }
 
 `;
